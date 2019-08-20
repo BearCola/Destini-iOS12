@@ -34,17 +34,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomButton: UIButton!      // Has TAG = 2
     @IBOutlet weak var storyTextView: UILabel!
     
+    @IBOutlet weak var restartButton: UIButton!
     // TODO Step 5: Initialise instance variables here
-    
+    var index : Int = 1
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // TODO Step 3: Set the text for the storyTextView, topButton, bottomButton, and to T1_Story, T1_Ans1, and T1_Ans2
-        
+        restart()
     }
 
     
@@ -52,13 +50,61 @@ class ViewController: UIViewController {
     @IBAction func buttonPressed(_ sender: UIButton) {
     
         // TODO Step 4: Write an IF-Statement to update the views
-                
-        // TODO Step 6: Modify the IF-Statement to complete the story
-        
-    
+        if (index == 1) {
+            if (sender.tag == 1) {
+                index = 3
+                storyTextView.text = story3
+                topButton.setTitle(answer3a, for: .normal)
+                bottomButton.setTitle(answer3b, for: .normal)
+            } else {
+                index = 2
+                storyTextView.text = story2
+                topButton.setTitle(answer2a, for: .normal)
+                bottomButton.setTitle(answer2b, for: .normal)
+            }
+        } else if (index == 2) {
+            if (sender.tag == 1) {
+                index = 3
+                storyTextView.text = story3
+                topButton.setTitle(answer3a, for: .normal)
+                bottomButton.setTitle(answer3b, for: .normal)
+            } else {
+                finishQuiz()
+                index = 4
+                storyTextView.text = story4
+            }
+        } else if (index == 3) {
+            finishQuiz()
+            if (sender.tag == 1) {
+                index = 6
+                storyTextView.text = story6
+            } else {
+                index = 5
+                storyTextView.text = story5
+            }
+        }
     }
-    
 
+    private func finishQuiz() {
+        restartButton.isHidden = false
+        topButton.isHidden = true
+        bottomButton.isHidden = true
+    }
+
+    @IBAction func restartPressed(_ sender: Any) {
+
+        restart()
+    }
+
+    private func restart() {
+        storyTextView.text = story1
+        topButton.setTitle(answer1a, for: .normal)
+        bottomButton.setTitle(answer1b, for: .normal)
+        index = 1
+        restartButton.isHidden = true
+        topButton.isHidden = false
+        bottomButton.isHidden = false
+    }
 
 
 }
